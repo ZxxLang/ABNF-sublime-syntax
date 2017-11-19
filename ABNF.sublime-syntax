@@ -1,0 +1,84 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+# http://www.sublimetext.com/docs/3/scope_naming.html
+name: ABNF
+file_extensions:
+  - abnf
+scope: source.abnf
+
+variables:
+  name: '[A-Za-z](?:-?[A-Za-z0-9])*'
+contexts:
+  main:
+    - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)\b\s*(=)?'
+      captures:
+        1: storage.rule-name.abnf
+        2: keyword.operator.assignment.abnf
+
+    - match: '([A-Za-z][A-Za-z0-9-]*)\s*(=/?)\s*'
+      scope: meta.paragraph.rule.abnf
+      captures:
+        1: constant.other.rule.abnf
+        2: keyword.operator.assignment.abnf
+
+    - match: '(to--)([A-Za-z0-9-]+)?\s*'
+      captures:
+        1: variable.other.constant.abnf
+        2: support.function.action.abnf
+
+    - match: '({{name}})(--[A-Za-z0-9-]+)?\s*'
+      captures:
+        1: variable.other.constant.abnf
+        2: support.function.action.abnf
+
+    - match: '\s*%b[01]+((-[01]+)|(\.[01]+)*)\s*'
+      scope: constant.numeric.binary.abnf
+
+    - match: '\s*%d[0-9]+((-[0-9]+)|(\.[0-9]+)*)\s*'
+      scope: constant.numeric.decimal.abnf
+
+    - match: '\s*%x[0-9A-Fa-f]+((-[0-9A-Fa-f]+)|(\.[0-9A-Fa-f]+)*)\s*'
+      scope: constant.numeric.hexadecimal.abnf
+
+    - match: '\s*%s'
+      scope: storage.modifier.case-sensitive.abnf
+    - match: '\s*%i'
+      scope: storage.modifier.case-insensitive.abnf
+
+    - match: '[0-9]+'
+      scope: constant.numeric.integer.abnf
+    - match: '\s*\*\s*'
+      scope: keyword.operator.repeat.abnf
+    - match: '\s*/\s*'
+      scope: keyword.operator.or.abnf
+    - match: '\s*\(\s*'
+      scope: punctuation.bracket.round.begin.abnf
+    - match: '\s*\)\s*'
+      scope: punctuation.bracket.round.end.abnf
+    - match: '\s*\[\s*'
+      scope: punctuation.bracket.square.begin.abnf
+    - match: '\s*\]\s*'
+      scope: punctuation.bracket.square.end.abnf
+
+    - match: '\s*((<)[^>]*(>))\s*'
+      captures:
+        1: string.quoted.angle.abnf
+        2: punctuation.definition.prose.begin.abnf
+        3: punctuation.definition.prose.end.abnf
+
+    - match: '\s*((")[^"]*("))\s*'
+      captures:
+        1: string.quoted.double.abnf
+        2: punctuation.definition.string.begin.abnf
+        3: punctuation.definition.string.end.abnf
+
+    - match: '\s*((\x27)[^\x27]*(\x27))\s*'
+      captures:
+        1: string.quoted.double.abnf
+        2: punctuation.definition.string.begin.abnf
+        3: punctuation.definition.string.end.abnf
+
+    - match: '\s*(;.*)$'
+      captures:
+        1: comment.line.semi-colon.abnf
