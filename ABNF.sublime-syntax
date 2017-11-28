@@ -13,13 +13,13 @@ contexts:
   main:
     - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)\b\s*(=)?'
       captures:
-        1: storage.rule-name.abnf
+        1: support.type.rule.abnf
         2: keyword.operator.assignment.abnf
 
     - match: '([A-Za-z][A-Za-z0-9-]*)\s*(=/?)\s*'
       scope: meta.paragraph.rule.abnf
       captures:
-        1: constant.other.rule.abnf
+        1: entity.name.rule.abnf
         2: keyword.operator.assignment.abnf
 
     - match: '(to--)([A-Za-z0-9-]+)?\s*'
