@@ -27,7 +27,7 @@ contexts:
         1: variable.other.constant.abnf
         2: support.function.action.abnf
 
-    - match: '({{name}})(--[A-Za-z0-9-]+)?\s*'
+    - match: '({{name}})(--[!-~]+)?\s*'
       captures:
         1: variable.other.constant.abnf
         2: support.function.action.abnf
