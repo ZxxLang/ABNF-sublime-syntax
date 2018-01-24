@@ -9,28 +9,30 @@ scope: source.abnf
 
 variables:
   name: '[A-Za-z](?:-?[A-Za-z0-9])*'
+  arguments: '[\x21-\x2E\x30-\x7E]+'
 contexts:
   main:
-    - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)\b\s*(=)?'
-      captures:
-        1: support.type.rule.abnf
-        2: keyword.operator.assignment.abnf
 
-    - match: '([A-Za-z][A-Za-z0-9-]*)\s*(=/?)\s*'
+    - match: '({{name}})\s*(=/?)\s*'
       scope: meta.paragraph.rule.abnf
       captures:
         1: entity.name.rule.abnf
         2: keyword.operator.assignment.abnf
 
-    - match: '(to--)([A-Za-z0-9-]+)?\s*'
+    - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)(--{{arguments}})?\s*'
       captures:
-        1: variable.other.constant.abnf
-        2: support.function.action.abnf
+        1: support.type.rule.abnf
+        2: support.function.abnf
 
-    - match: '({{name}})(--[!-~]+)?\s*'
+    - match: '(to--)({{arguments}})\s*'
+      captures:
+        1: keyword.control.abnf
+        2: support.function.abnf
+
+    - match: '({{name}})(--{{arguments}})?\s*'
       captures:
         1: variable.other.constant.abnf
-        2: support.function.action.abnf
+        2: support.function.abnf
 
     - match: '\s*%b[01]+((-[01]+)|(\.[01]+)*)\s*'
       scope: constant.numeric.binary.abnf
