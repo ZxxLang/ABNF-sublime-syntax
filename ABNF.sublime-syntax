@@ -9,27 +9,25 @@ scope: source.abnf
 
 variables:
   name: '[A-Za-z](?:-?[A-Za-z0-9])*'
-  arguments: '[\x21-\x2E\x30-\x7E]+'
 contexts:
   main:
+    - match: '(^{{name}})'
+      scope: entity.name.rule.abnf
 
-    - match: '({{name}})\s*(=/?)\s*'
-      scope: meta.paragraph.rule.abnf
-      captures:
-        1: entity.name.rule.abnf
-        2: keyword.operator.assignment.abnf
+    - match: '=/?'
+      scope: keyword.operator.assignment.abnf
 
-    - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)(--{{arguments}})?\s*'
+    - match: '(ALPHA|BIT|CHAR|CR|CRLF|CTL|DIGIT|DQUOTE|HEXDIG|HTAB|LF|LWSP|OCTET|SP|VCHAR|WSP)(--{{name}}(?:\x28[^\x29]*\x29)?)?'
       captures:
         1: support.type.rule.abnf
         2: support.function.abnf
 
-    - match: '(to--)({{arguments}})\s*'
+    - match: '(to--)({{name}}(?:\x28[^\x29]*\x29)?)'
       captures:
         1: keyword.control.abnf
         2: support.function.abnf
 
-    - match: '({{name}})(--{{arguments}})?\s*'
+    - match: '({{name}})(--{{name}}(?:\x28[^\x29]*\x29)?)?'
       captures:
         1: variable.other.constant.abnf
         2: support.function.abnf
